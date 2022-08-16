@@ -1,0 +1,31 @@
+Replacing Names:
+SELECT
+country_name as Country_Name,
+country_code as Country_Code,
+indicator_name as Indicator_Name,
+indicator_code as Indicator_Code,
+value as Debt
+FROM `bigquery-public-data.world_bank_intl_debt.international_debt`
+order by country_name asc
+
+What is the total amount of money that countries owe to the World Bank?
+SELECT 
+  ROUNd(SUM(value), 2) as total_debt  
+  FROM `bigquery-public-data.world_bank_intl_debt.international_debt`
+  
+Which country has the highest debt, and how much is that?
+SELECT
+  sum(value) as total_debt,
+  country_name
+FROM `bigquery-public-data.world_bank_intl_debt.international_debt` 
+  group by country_name
+  order by total_debt desc
+  
+What is the mean debt owed by countries for different debt indicators?
+SELECT 
+indicator_code as debt_indicator,
+indicator_name,
+avg(value) as average_debt
+ FROM `bigquery-public-data.world_bank_intl_debt.international_debt`
+ group by 1,2
+ order by 3 desc
